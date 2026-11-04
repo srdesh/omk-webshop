@@ -154,7 +154,7 @@ function renderHome() {
     '<main class="app-page"><div class="page-wrap home-wrap">' +
       '<section class="hero" style="background-image:url(' + HERO + ')" aria-label="Aurelian Bistro">' +
         '<div class="hero-content"><div><h1>Aurelian Bistro</h1><p>Fresh food at your door in minutes — ordered straight online, no app.</p>' +
-        '<omk-button variant="primary hero-cta" data-action="start-order">START ORDER <span aria-hidden="true">→</span></omk-button></div>' +
+        '<omk-button variant="primary hero-cta" data-action="start-order">START ORDER ' + icon("arrow-right",18) + '</omk-button></div>' +
         '<div class="prep-pill"><span aria-hidden="true">◷</span> Avg prep time 25min</div></div></section>' +
       '<section class="section-card popular-panel"><div class="section-head"><h2>Popular items</h2></div><div class="popular-track">' + popular + '</div></section>' +
       '<footer class="home-footer"><img src="' + LOGO + '" alt="Order Monkey"><a href="#" data-action="terms">Terms &amp; Conditions</a></footer>' +
@@ -172,7 +172,7 @@ function renderOrderType() {
       '<button class="choice-card ' + (state.orderType===c.id?"selected":"") + '" data-action="select-order" data-type="' + c.id + '" aria-pressed="' + (state.orderType===c.id) + '">' +
       '<span class="choice-icon" aria-hidden="true">' + icon(c.icon,24) + '</span><strong>' + c.title + '</strong><span>' + c.copy + '</span></button>'
     ).join("") + '</div>' +
-    '<div class="step-footer"><omk-button variant="primary full" data-action="to-outlet">CONTINUE <span aria-hidden="true">→</span></omk-button></div>' +
+    '<div class="step-footer"><omk-button variant="primary full" data-action="to-outlet">CONTINUE ' + icon("arrow-right",18) + '</omk-button></div>' +
   '</section></div></main>';
 }
 function renderOutlet() {
@@ -185,7 +185,7 @@ function renderOutlet() {
       '</div></section>' +
       '<section class="panel-soft"><h3>Select time and postal</h3><div class="field-grid">' +
         '<div class="field"><label for="order-date">Date</label><div class="input-with-icon"><input id="order-date" type="date" min="' + dateValue + '" value="' + state.orderDate + '"><span class="input-icon" aria-hidden="true">▦</span></div></div>' +
-        '<div class="field"><label for="order-time">Time</label><div class="input-with-icon"><input id="order-time" type="time" value="' + state.orderTime + '"><span class="input-icon" aria-hidden="true">◷</span></div></div>' +
+        '<div class="field"><label for="order-time">Time</label><div class="input-with-icon"><input id="order-time" type="time" value="' + state.orderTime + '">' + icon("clock",18) + '</div></div>' +
         '<div class="field"><label for="postal-code">Postal Code</label><input id="postal-code" value="' + esc(state.postalCode) + '" inputmode="numeric" autocomplete="postal-code"></div>' +
         '<div class="field"><label>&nbsp;</label><button class="btn outline full" data-action="search-location">SEARCH FOR LOCATION ' + icon("search-normal",18) + '</button></div>' +
       '</div></section>' +
@@ -197,7 +197,7 @@ function renderOutlet() {
           '<button class="outlet-option ' + (state.outlet===name?"selected":"") + '" data-action="choose-outlet" data-name="' + name + '" aria-pressed="' + (state.outlet===name) + '">' +
             '<span class="outlet-marker" aria-hidden="true">' + icon(state.outlet===name?"tick-circle":"location",20) + '</span><span><strong>' + name + '</strong><small>Musterstrasse 12, 8001<br>Zürich, Schweiz</small></span></button>'
         ).join("") + '</div></div></section>' +
-      '<div class="step-footer"><omk-button variant="primary full" data-action="to-menu">CONTINUE <span aria-hidden="true">→</span></omk-button></div>' +
+      '<div class="step-footer"><omk-button variant="primary full" data-action="to-menu">CONTINUE ' + icon("arrow-right",18) + '</omk-button></div>' +
     '</div></section></div></main>';
 }
 function renderProductCard(p) {
@@ -295,7 +295,7 @@ function renderCheckout() {
     '<section class="checkout-card"><h2>Bill Details</h2><div class="checkout-card-body">' + renderBill() + '</div></section>' +
     '<section class="checkout-card prep-card"><div class="prep-top"><strong>30–35 min</strong><span class="tag">' + (state.fulfillment==="delivery"?"Delivery":"Takeaway") + '</span></div><p>Avg preparing time</p><div class="location-text">⌖ &nbsp; Location<br><strong>' + esc(state.outlet) + '</strong> · Musterstrasse 12, 8001 Zürich</div><button data-action="change-location">♧ &nbsp; Change</button></section>' +
     '<section class="checkout-card"><div class="checkout-card-body"><h3 style="margin:0 0 12px;font-size:14px;font-weight:500">Add a tip</h3><div class="tip-options">' + [0,2,3.3,5].map(value=>'<button class="tip-option ' + (state.tip===value?"selected":"") + '" data-action="tip" data-value="' + value + '">' + (value===0?"No tip":money(value)) + '</button>').join("") + '</div></div></section>' +
-    '<omk-button variant="primary full" data-action="to-payment">CONTINUE TO CHECKOUT <span aria-hidden="true">→</span></omk-button>' +
+    '<omk-button variant="primary full" data-action="to-payment">CONTINUE TO CHECKOUT ' + icon("arrow-right",18) + '</omk-button>' +
   '</aside></div></div></main>';
 }
 function renderPayment() {
