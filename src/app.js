@@ -1,3 +1,4 @@
+import "iconsax";
 import "./components.js";
 
 const ASSET = "https://www.figma.com/api/mcp/asset/17bb51b3-29e0-4fcd-b506-472ea82906ce/";
@@ -39,6 +40,8 @@ const products = [
 
 const money = value => "CHF " + Number(value || 0).toFixed(2).replace(".", ",");
 const esc = value => String(value == null ? "" : value).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+const icon = (name, size = 20, type = "outline", color = "currentColor") =>
+  '<iconsax-icon name="' + name + '" type="' + type + '" size="' + size + '" color="' + color + '" aria-hidden="true"></iconsax-icon>';
 const today = new Date();
 const dateValue = today.getFullYear() + "-" + String(today.getMonth()+1).padStart(2,"0") + "-" + String(today.getDate()).padStart(2,"0");
 
@@ -159,15 +162,15 @@ function renderHome() {
 }
 function renderOrderType() {
   const choices = [
-    {id:"takeaway",icon:"♧",title:"Takeaway",copy:"Pick date, time & location and collect yourself."},
-    {id:"delivery",icon:"♢",title:"Delivery",copy:"Get faster delivery straight to your door."},
-    {id:"catering",icon:"◌",title:"Catering",copy:"Larger order, pickup billed by invoice."}
+    {id:"takeaway",icon:"bag",title:"Takeaway",copy:"Pick date, time & location and collect yourself."},
+    {id:"delivery",icon:"box",title:"Delivery",copy:"Get faster delivery straight to your door."},
+    {id:"catering",icon:"ticket-discount",title:"Catering",copy:"Larger order, pickup billed by invoice."}
   ];
   app.innerHTML = header(true) + '<main class="app-page"><div class="page-wrap"><section class="card step-card">' +
     topStep(1) + '<h1 class="step-title">How would you like to order?</h1>' +
     '<div class="order-choice-grid">' + choices.map(c =>
       '<button class="choice-card ' + (state.orderType===c.id?"selected":"") + '" data-action="select-order" data-type="' + c.id + '" aria-pressed="' + (state.orderType===c.id) + '">' +
-      '<span class="choice-icon" aria-hidden="true">' + c.icon + '</span><strong>' + c.title + '</strong><span>' + c.copy + '</span></button>'
+      '<span class="choice-icon" aria-hidden="true">' + icon(c.icon,24) + '</span><strong>' + c.title + '</strong><span>' + c.copy + '</span></button>'
     ).join("") + '</div>' +
     '<div class="step-footer"><omk-button variant="primary full" data-action="to-outlet">CONTINUE <span aria-hidden="true">→</span></omk-button></div>' +
   '</section></div></main>';
@@ -175,7 +178,7 @@ function renderOrderType() {
 function renderOutlet() {
   app.innerHTML = header(true) + '<main class="app-page"><div class="page-wrap"><section class="card step-card">' +
     topStep(2) + '<div class="choice-inner">' +
-      '<div class="summary-strip"><strong><span aria-hidden="true">♧</span> ' + state.orderType[0].toUpperCase() + state.orderType.slice(1) + '</strong><button type="button" data-action="change-type">Change type</button></div>' +
+      '<div class="summary-strip"><strong>' + icon("bag",18) + ' ' + state.orderType[0].toUpperCase() + state.orderType.slice(1) + '</strong><button type="button" data-action="change-type">Change type</button></div>' +
       '<section class="panel-soft"><h3>How would you like to receive the order?</h3><div class="radio-tiles">' +
         '<button class="radio-tile ' + (state.fulfillment==="pickup"?"selected":"") + '" data-action="fulfillment" data-value="pickup" aria-pressed="' + (state.fulfillment==="pickup") + '">I will pick the order <span class="radio-dot"></span></button>' +
         '<button class="radio-tile ' + (state.fulfillment==="delivery"?"selected":"") + '" data-action="fulfillment" data-value="delivery" aria-pressed="' + (state.fulfillment==="delivery") + '">I want delivery <span class="radio-dot"></span></button>' +
@@ -184,7 +187,7 @@ function renderOutlet() {
         '<div class="field"><label for="order-date">Date</label><div class="input-with-icon"><input id="order-date" type="date" min="' + dateValue + '" value="' + state.orderDate + '"><span class="input-icon" aria-hidden="true">▦</span></div></div>' +
         '<div class="field"><label for="order-time">Time</label><div class="input-with-icon"><input id="order-time" type="time" value="' + state.orderTime + '"><span class="input-icon" aria-hidden="true">◷</span></div></div>' +
         '<div class="field"><label for="postal-code">Postal Code</label><input id="postal-code" value="' + esc(state.postalCode) + '" inputmode="numeric" autocomplete="postal-code"></div>' +
-        '<div class="field"><label>&nbsp;</label><button class="btn outline full" data-action="search-location">SEARCH FOR LOCATION <span aria-hidden="true">⌕</span></button></div>' +
+        '<div class="field"><label>&nbsp;</label><button class="btn outline full" data-action="search-location">SEARCH FOR LOCATION ' + icon("search-normal",18) + '</button></div>' +
       '</div></section>' +
       '<section class="map-section"><h2 class="map-title">Choose Location</h2><div class="map-card" aria-label="Illustrative outlet map">' +
         '<div class="map-park one"></div><div class="map-park two"></div><div class="map-road"></div><div class="map-road two"></div>' +
@@ -192,7 +195,7 @@ function renderOutlet() {
         '<div class="map-pin" style="left:53%;top:32%"></div><div class="map-pin" style="left:78%;top:14%;transform:rotate(-45deg) scale(.82)"></div><div class="map-pin" style="left:78%;top:75%;transform:rotate(-45deg) scale(.82)"></div>' +
         '<div class="outlet-list">' + ["Zurich Outlet","Altstetten Outlet","Dübendorf Outlet","Oerlikon Outlet"].map((name,i) =>
           '<button class="outlet-option ' + (state.outlet===name?"selected":"") + '" data-action="choose-outlet" data-name="' + name + '" aria-pressed="' + (state.outlet===name) + '">' +
-            '<span class="outlet-marker" aria-hidden="true">' + (state.outlet===name?"✓":"⌖") + '</span><span><strong>' + name + '</strong><small>Musterstrasse 12, 8001<br>Zürich, Schweiz</small></span></button>'
+            '<span class="outlet-marker" aria-hidden="true">' + icon(state.outlet===name?"tick-circle":"location",20) + '</span><span><strong>' + name + '</strong><small>Musterstrasse 12, 8001<br>Zürich, Schweiz</small></span></button>'
         ).join("") + '</div></div></section>' +
       '<div class="step-footer"><omk-button variant="primary full" data-action="to-menu">CONTINUE <span aria-hidden="true">→</span></omk-button></div>' +
     '</div></section></div></main>';
@@ -201,7 +204,7 @@ function renderProductCard(p) {
   return '<omk-product-card product-id="' + p.id + '" name="' + esc(p.name) + '" price="' + money(p.price) + '" image="' + p.image + '" category="' + esc(p.category) + '"></omk-product-card>';
 }
 function renderCartRows() {
-  if (!state.cart.length) return '<div class="empty-cart"><span aria-hidden="true">🛍</span><p>Your cart is empty</p><small>Add something delicious to get started.</small></div>';
+  if (!state.cart.length) return '<div class="empty-cart"><span class="empty-cart-icon" aria-hidden="true">' + icon("bag",28) + '</span><p>Your cart is empty</p><small>Add something delicious to get started.</small></div>';
   return state.cart.map((row,index) => {
     const p=getProduct(row.id);
     return '<div class="cart-row"><img src="' + p.image + '" alt="" loading="lazy"><div class="cart-item-copy"><div class="cart-item-name">' + esc(p.name) + '</div><div class="cart-item-price">' + money(p.price * row.qty) + '</div>' +
@@ -210,20 +213,20 @@ function renderCartRows() {
 }
 function renderCart() {
   return '<aside class="menu-sidebar">' +
-    '<div class="promo-mini"><span class="promo-icon" aria-hidden="true">%</span><div><strong>20% OFF</strong><small>Apply on full menu</small></div><input type="checkbox" aria-label="Apply 20 percent off" data-action="promo-toggle" ' + (state.selectedPromo?"checked":"") + '></div>' +
-    '<div class="promo-mini"><span class="promo-icon" aria-hidden="true">%</span><div><strong>30% OFF</strong><small>Apply on drinks</small></div><input type="checkbox" aria-label="Apply 30 percent off drinks" disabled></div>' +
+    '<div class="promo-mini"><span class="promo-icon" aria-hidden="true">' + icon("tag",18,"bold","#fff") + '</span><div><strong>20% OFF</strong><small>Apply on full menu</small></div><input type="checkbox" aria-label="Apply 20 percent off" data-action="promo-toggle" ' + (state.selectedPromo?"checked":"") + '></div>' +
+    '<div class="promo-mini"><span class="promo-icon" aria-hidden="true">' + icon("tag",18,"bold","#fff") + '</span><div><strong>30% OFF</strong><small>Apply on drinks</small></div><input type="checkbox" aria-label="Apply 30 percent off drinks" disabled></div>' +
     '<section class="section-card cart-card"><div class="cart-title"><h2>Cart</h2><small>' + cartCount() + ' Items</small></div><div class="cart-items">' + renderCartRows() + '</div>' +
       (state.selectedPromo ? '<div class="cart-promo">20% OFF APPLIED ON FULL MENU <button data-action="remove-promo" aria-label="Remove offer">×</button></div>' : '') +
       '<div class="cart-total"><span>Total</span><strong>' + money(subtotal()-discount()) + '</strong></div>' +
     '</section>' +
-    '<section class="section-card prep-card"><div class="prep-top"><strong>30–35 min</strong><span class="tag">' + (state.fulfillment==="delivery"?"Delivery":"Takeaway") + '</span></div><p>Avg preparing time</p><div class="location-text">⌖ &nbsp; Location<br><strong>' + esc(state.outlet) + '</strong> · Musterstrasse 12, 8001 Zürich</div><button data-action="change-location">♧ &nbsp; Change</button></section>' +
+    '<section class="section-card prep-card"><div class="prep-top"><strong>30–35 min</strong><span class="tag">' + (state.fulfillment==="delivery"?"Delivery":"Takeaway") + '</span></div><p>Avg preparing time</p><div class="location-text">' + icon("location",18) + ' &nbsp; Location<br><strong>' + esc(state.outlet) + '</strong> · Musterstrasse 12, 8001 Zürich</div><button data-action="change-location">' + icon("location",16) + ' &nbsp; Change</button></section>' +
     '</aside>';
 }
 function renderOffers() {
   return '<section class="section-card"><div class="section-head"><h2>Rewards</h2><span>⌃</span></div><div class="section-body"><div class="mini-reward-grid">' +
-    '<div class="reward-tile"><span>♧</span><strong>Redeem free drink</strong><small>800 Points</small><button data-action="redeem">Redeem</button></div>' +
-    '<div class="reward-tile"><span>♧</span><strong>Redeem free burger</strong><small>1300 Points</small><button data-action="redeem">Redeem</button></div>' +
-    '<div class="reward-tile"><span>♧</span><strong>Redeem free pizza</strong><small>1600 Points</small><button data-action="redeem">Redeem</button></div>' +
+    '<div class="reward-tile">' + icon("ticket-discount",20,"bold") + '<strong>Redeem free drink</strong><small>800 Points</small><button data-action="redeem">Redeem</button></div>' +
+    '<div class="reward-tile">' + icon("ticket-discount",20,"bold") + '<strong>Redeem free burger</strong><small>1300 Points</small><button data-action="redeem">Redeem</button></div>' +
+    '<div class="reward-tile">' + icon("ticket-discount",20,"bold") + '<strong>Redeem free pizza</strong><small>1600 Points</small><button data-action="redeem">Redeem</button></div>' +
   '</div></div></section>' +
   '<section class="section-card"><div class="section-head"><h2>Vouchers</h2><span>⌃</span></div><div class="section-body"><div class="voucher-grid">' +
     ["Free Voucher for Fries","Free Voucher for Valentine","Free Voucher for Christmas"].map((title,i)=>'<div class="voucher"><span class="voucher-type">' + (i===0?"Single Item":"Full Cart") + '</span><strong>' + title + '</strong><small>Code &nbsp; CXR*****556</small><small>Expires / 31 Dec 2026</small><button data-action="claim-voucher">Claim Now</button></div>').join("") +
@@ -247,14 +250,14 @@ function renderMenu() {
   const categoryTabs=["Popular Items","My Offers","Burgers","Sandwiches","Sides","Beverages"];
   const dietary=["Vegan","Hypoallergenic","Halal","Gluten Free","Low Fat","Top Selling"];
   const offers=state.category==="My Offers";
-  app.innerHTML=header(true) + '<main class="app-page"><div class="page-wrap"><div class="menu-layout"><div class="menu-main">' +
+  app.innerHTML=header(true) + '<main class="app-page ' + (cartCount() ? "has-sticky-cart" : "") + '"><div class="page-wrap"><div class="menu-layout"><div class="menu-main">' +
     '<section class="menu-hero" style="background-image:url(' + HERO + ')"><div class="menu-hero-copy"><h1>Aurelian Bistro</h1><p><span class="open-dot"></span>Open Now · 11:00 – 22:00</p></div></section>' +
-    '<section class="section-card"><div class="menu-toolbar"><strong>Menu</strong><div class="menu-actions"><label class="search-box"><span aria-hidden="true">⌕</span><input id="menu-search" type="search" value="' + esc(state.query) + '" placeholder="Search Products" aria-label="Search menu products"></label><button class="btn secondary small" data-action="shop-info">ⓘ Shop Info</button></div></div></section>' +
+    '<section class="section-card"><div class="menu-toolbar"><strong>Menu</strong><div class="menu-actions"><label class="search-box">' + icon("search-normal",18) + '<input id="menu-search" type="search" value="' + esc(state.query) + '" placeholder="Search Products" aria-label="Search menu products"></label><button class="btn secondary small" data-action="shop-info">' + icon("info-circle",18) + ' Shop Info</button></div></div></section>' +
     '<section class="section-card"><nav class="category-tabs" aria-label="Menu categories">' + categoryTabs.map(category=>'<button class="category-tab ' + (state.category===category?"active":"") + '" data-action="category" data-category="' + category + '" aria-pressed="' + (state.category===category) + '">' + category + '</button>').join("") + '</nav>' +
       '<div class="diet-filters">' + dietary.map(tag=>'<button class="diet-chip ' + (state.dietary.includes(tag)?"active":"") + '" data-action="diet" data-tag="' + tag + '" aria-pressed="' + state.dietary.includes(tag) + '">' + tag + '</button>').join("") + '</div></section>' +
     (offers ? renderOffers() : '<section class="rewards-banner"><div class="reward-person"><div class="reward-avatar" aria-hidden="true">👩🏽</div><div><strong>SARAH CHRISTOPHER</strong><small>LOYALTY MEMBER</small></div></div><div class="reward-points">1256 PT</div></section>' + renderMenuSections()) +
   '</div>' + renderCart() + '</div></div>' +
-  (cartCount() ? '<div class="sticky-cart-mobile"><div class="sticky-cart-info"><span class="cart-icon" aria-hidden="true">▣</span><span><strong>' + cartCount() + ' Items | ' + money(subtotal()) + '</strong><small>Extra charges may apply</small></span></div><button data-action="checkout">CHECKOUT</button></div>' : '') +
+  (cartCount() ? '<div class="sticky-cart-bar"><div class="sticky-cart-panel"><div class="sticky-cart-info"><span class="sticky-cart-icon">' + icon("bag",24,"outline","#fff") + '</span><span class="sticky-cart-text"><strong>' + cartCount() + ' Items | ' + money(subtotal()) + '</strong><small>Extra charges may apply</small></span></div><button class="sticky-cart-action" type="button" data-action="checkout">CHECKOUT</button></div></div>' : '') +
   '</main>';
 }
 function renderCheckoutItems() {
