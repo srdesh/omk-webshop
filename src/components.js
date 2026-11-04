@@ -29,12 +29,12 @@ class OMKTopbar extends HTMLElement {
     header.innerHTML =
       '<div class="header-inner">' +
         '<div class="header-brand">' +
-          (showBack ? '<button class="header-back" type="button" data-omk-action="back" aria-label="Go back"><span aria-hidden="true">←</span></button>' : '') +
+          (showBack ? '<button class="header-back" type="button" data-omk-action="back" aria-label="Go back"><iconsax-icon name="arrow-left" type="outline" size="20" color="currentColor" aria-hidden="true"></iconsax-icon></button>' : '') +
           '<a href="#" class="brand-link" data-omk-action="home" aria-label="Order Monkey home"><img src="' + LOGO + '" alt="Order Monkey"></a>' +
         '</div>' +
         '<nav class="header-actions" aria-label="Main navigation">' +
-          '<button type="button" data-omk-action="reset"><span aria-hidden="true">↻</span><span>Start over</span></button>' +
-          (showLogin ? '<span class="header-divider" aria-hidden="true"></span><button type="button" data-omk-action="login"><span aria-hidden="true">↪</span><span>Login</span></button>' : '') +
+          '<button type="button" data-omk-action="reset"><iconsax-icon name="refresh" type="outline" size="18" color="currentColor" aria-hidden="true"></iconsax-icon><span>Start over</span></button>' +
+          (showLogin ? '<span class="header-divider" aria-hidden="true"></span><button type="button" data-omk-action="login"><iconsax-icon name="login" type="outline" size="18" color="currentColor" aria-hidden="true"></iconsax-icon><span>Login</span></button>' : '') +
           '<span class="header-divider" aria-hidden="true"></span>' +
           '<button type="button" class="language-button" data-omk-action="language"><span class="flag" aria-hidden="true">🇬🇧</span><span>EN</span><span aria-hidden="true">⌄</span></button>' +
         '</nav>' +
@@ -66,7 +66,7 @@ class OMKProductCard extends HTMLElement {
       '<article class="product-card">' +
         '<button type="button" class="product-image-button" data-open-product="' + id + '" aria-label="View ' + name.replace(/"/g, "&quot;") + '">' +
           '<img src="' + image + '" alt="" loading="lazy">' +
-          '<span class="quick-add" aria-hidden="true">+</span>' +
+          '<span class="quick-add" aria-hidden="true"><iconsax-icon name="add" type="outline" size="20" color="currentColor"></iconsax-icon></span>' +
         '</button>' +
         '<div class="product-card-copy"><span class="product-category">' + category + '</span>' +
           '<h3>' + name + '</h3><p class="product-price">' + price + '</p></div>' +
