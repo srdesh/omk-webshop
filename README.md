@@ -10,23 +10,36 @@ Responsive HTML, CSS and JavaScript prototype based on the Order Monkey Web Shop
 - Menu categories, product search and dietary filters
 - Product customization, add-ons and quantity controls
 - Cart, sample promotion and loyalty/reward surfaces
+- Persistent bottom cart bar with live item count, subtotal and checkout action
 - Customer and delivery information, comments and tips
 - Payment method selection and order confirmation
 - Order receipt with a downloadable text summary
 
 ## Run locally
 
-This is a static website with no build step. Open `index.html` in a local static web server, for example:
+Requires Node.js 20.19+ or 22.12+.
 
 ```bash
-python3 -m http.server 8000
+npm install
+npm run dev
 ```
 
-Then open `http://localhost:8000`.
+Open the local URL printed by Vite (normally `http://localhost:5173`).
+
+To verify the production build locally:
+
+```bash
+npm run build
+npm run preview
+```
+
+## Icons
+
+Icons use the official Iconsax Web Component package. The app imports `iconsax` once and renders the Figma-aligned icon names with the outline/bold variants and sizes used in the interface. See the [Iconsax Web Component documentation](https://docs.iconsax.io/npm/web-component).
 
 ## Deployment
 
-The GitHub Actions workflow in `.github/workflows/pages.yml` deploys the root of the repository to GitHub Pages on every push to `main`.
+The GitHub Actions workflow in `.github/workflows/pages.yml` installs dependencies, validates the JavaScript modules, builds the Vite production bundle, and deploys the `dist` folder to GitHub Pages on every push to `main`.
 
 For the first deployment, open **Settings → Pages** in this repository and choose **GitHub Actions** as the build and deployment source. Once enabled, future pushes deploy automatically.
 
@@ -45,14 +58,16 @@ The prototype uses native form controls, explicit labels, semantic headings, but
 
 ## Technology
 
-- HTML5
-- CSS3 with responsive breakpoints
+- HTML5 and CSS3 with responsive breakpoints
 - Vanilla JavaScript ES modules
 - Native custom elements / Web Components
+- Iconsax Web Components
+- Vite for development and production bundling
 
 ## Code Connect
 
 The reusable web components are in `src/components.js`:
+
 - `omk-topbar`
 - `omk-button`
 - `omk-product-card`
