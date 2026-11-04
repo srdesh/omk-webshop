@@ -297,7 +297,7 @@ function renderCheckout() {
 }
 function renderPayment() {
   const options=[["card","💳","Card"],["twint","TWINT","TWINT"],["apple"," Pay","Apple Pay"],["google","G Pay","Google Pay"]];
-  app.innerHTML=header(true) + '<main class="payment-screen"><section class="payment-card"><h1>Available Payment Options</h1><p>We accept a variety of payment options</p>' +
+  app.innerHTML='<main class="payment-screen"><section class="payment-card"><h1>Available Payment Options</h1><p>We accept a variety of payment options</p>' +
     '<div class="payment-grid" role="group" aria-label="Choose payment method">' + options.map(([id,icon,label])=>'<button class="payment-option ' + (state.payment===id?"selected":"") + '" data-action="payment-select" data-method="' + id + '" aria-pressed="' + (state.payment===id) + '"><span class="payment-icon">' + icon + '</span><small>' + label + '</small></button>').join("") + '</div>' +
     '<div class="payment-actions"><button class="btn secondary" data-action="back-checkout">BACK TO ORDER</button><button class="btn primary" data-action="place-order">CONTINUE</button></div>' +
     '<div class="demo-note">Demo checkout only. No payment is processed and no card details are requested.</div></section></main>';
