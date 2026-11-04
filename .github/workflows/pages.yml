@@ -20,14 +20,24 @@ jobs:
     steps:
       - name: Check out source
         uses: actions/checkout@v4
-      - name: Validate JavaScript modules
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Validate source modules
         run: |
           node --check src/components.js
           node --check src/app.js
+          node --check vite.config.js
+      - name: Build production site
+        run: npm run build
       - name: Prepare Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: dist
   deploy:
     environment:
       name: github-pages
